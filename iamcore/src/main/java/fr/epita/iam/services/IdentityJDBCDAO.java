@@ -67,11 +67,10 @@ public class IdentityJDBCDAO {
      ResultSet result = statement.executeQuery();
     
      while(result.next()){
-       long uId = result.getLong("Uid");
        String displayName = result.getString("DisplayName");
        String email = result.getString("Email");
        String birthdate = result.getString("Birthday");
-       Identity id = new Identity(displayName, email, dfm.dateFromString(birthdate), null);
+       Identity id = new Identity(displayName, email, dfm.dateFromString(birthdate));
        listId.add(id);
         }
       this.releaseResources(connection);
@@ -150,11 +149,10 @@ public class IdentityJDBCDAO {
       ResultSet result = statement.executeQuery();
     
       while(result.next()){
-        long uId = result.getLong("Uid");
         String displayName = result.getString("DisplayName");
         String email = result.getString("Email");
         String birthdate = result.getString("Birthday");
-        id = new Identity(displayName, email, dfm.dateFromString(birthdate), null);
+        id = new Identity(displayName, email, dfm.dateFromString(birthdate));
       }
       this.releaseResources(connection);
     } catch (Exception e)

@@ -22,9 +22,9 @@ import fr.epita.iam.services.DateFormatManager;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext.xml"})
-public class TestHibernateDAO {
+public class TestIdentityHibernateDAO {
 
-  private static final Logger LOGGER = LogManager.getLogger(TestHibernateDAO.class);
+  private static final Logger LOGGER = LogManager.getLogger(TestIdentityHibernateDAO.class);
   
   
   @Inject
@@ -41,30 +41,37 @@ public class TestHibernateDAO {
     LOGGER.info("Before : {} ", identities);
     
     DateFormatManager dfm = new DateFormatManager();
-    Identity id = new Identity("Carlos Diez", "cdm@gmailcom", dfm.dateFromString("1980-12-24"), null);
+    Identity id = new Identity("Carlos Diez", "cdm@gmailcom", dfm.dateFromString("1980-12-24"));
     dao.write(id);
     
-    identities = dao.search(new Identity(null, null, null, null));
+    identities = dao.search(new Identity(null, null, null));
     for(Identity id2 : identities)
     {
       System.out.println(id2.toString());
      }
-    LOGGER.info("Search by Display Name");    
-    System.out.println(dao.search(new Identity("c", null, null, null)));
+    Assert.assertTrue(!identities.isEmpty());
+    
+    LOGGER.info("Search by Display Name");
+    identities = dao.search(new Identity("c", null, null));
+    System.out.println(identities);
+    Assert.assertTrue(identities.size() >= 1);
     
     LOGGER.info("Update Identity");    
-    id = dao.search(new Identity("c", null, null, null)).get(0);
+    id = dao.search(new Identity("c", null, null)).get(0);
     id.setDisplayName("Pepe");
     dao.update(id);
-    System.out.println(dao.search(new Identity("p", null, null, null)));
+    identities = dao.search(new Identity("p", null, null));
+    System.out.println(identities);
+    Assert.assertTrue(identities.size() >= 1);
     
-    LOGGER.info("Search identity by Identity");
-    List<Identity> res = dao.search(new Identity(null, null, dfm.dateFromString("1980-12-24"), null));
-    
+    LOGGER.info("Search identity by Date");
+    List<Identity> res = dao.search(new Identity(null, null, dfm.dateFromString("1980-12-24")));
+    Assert.assertTrue(!res.isEmpty());
     
     LOGGER.info("Delete Identity");    
+    int before = dao.search(new Identity(null, null, null)).size();
     dao.delete(id);
-    Assert.assertTrue(dao.search(new Identity(null, null, null, null)).size()<=1);
+    Assert.assertTrue(dao.search(new Identity(null, null, null)).size()<before);
   
   }
   
@@ -75,7 +82,7 @@ public class TestHibernateDAO {
     Transaction tx = session.beginTransaction();
     DateFormatManager dfm = new DateFormatManager();
     String displayName = "CDM";
-    session.save(new Identity(displayName, "cdm@gmailcom", dfm.dateFromString("1980-12-24"), null));
+    session.save(new Identity(displayName, "cdm@gmailcom", dfm.dateFromString("1980-12-24")));
     tx.commit();
     Query query = session.createQuery(hqlQuery);
     query.setParameter("dispName", displayName);

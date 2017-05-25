@@ -1,6 +1,5 @@
 package fr.epita.iam.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,7 +13,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import fr.epita.iam.datamodel.Address;
-import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.exceptions.DaoInitializationException;
 
 public class AddressHibernateDAO implements Dao<Address>{
@@ -129,40 +127,5 @@ public class AddressHibernateDAO implements Dao<Address>{
     }
     LOGGER.debug("<= searchAddress : Leaving with no errors");
     return addressList;
-  }
-
-  public List<Identity> searchIdentityByAddr(Address addr) {
-    LOGGER.debug("=> searchIdentityByAddr : tracing the input : {}", addr);
-    Session session = null;
-    List<Address> addressList = null;
-    List<Identity> identities = new ArrayList<Identity>();
-    try{
-      WhereBuilder wb = new WhereBuilder();
-      session = sf.openSession();
-      Query query = wb.addrWhere(session, addr);
-      addressList = query.list();
-      if(addressList.isEmpty())
-      {
-        LOGGER.info("No Address found with the given criteria.");
-      }
-    } catch(Exception e){
-      DaoInitializationException die = new DaoInitializationException("A problem was encountered when trying to search the address in the database.");
-      die.initCause(e);
-      throw die;
-    } finally {
-      if (session != null)
-        try {
-          session.close();
-        } catch (Exception e) {
-          LOGGER.error("FAILED: searchIdentityByAddr close connection. {}", e);
-        }
-    }
-    LOGGER.debug("<= searchIdentityByAddr : Leaving with no errors");
-    for(Address address : addressList)
-    {
-      if(address.getIdentity() != null)
-        identities.add(address.getIdentity());
-    }
-    return identities;
   }
 }

@@ -18,8 +18,8 @@ public class TestSpring {
   @Autowired
   IdentityJDBCDAO dao;
   
-  @Test
-  public void testSpringContext(){
-    dao.writeIdentity(new Identity("TB", "mail@.com", new Date(), null));
-  }
+//  @Test
+//  public void testSpringContext(){
+//    dao.writeIdentity(new Identity("TB", "mail@.com", new Date()));
+//  }
 }

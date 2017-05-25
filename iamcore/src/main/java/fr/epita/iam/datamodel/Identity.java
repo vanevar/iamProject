@@ -1,15 +1,12 @@
 package fr.epita.iam.datamodel;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import fr.epita.iam.services.DateFormatManager;
@@ -32,19 +29,15 @@ public class Identity {
   @Column(name="Birthday")
   private Date birthdate;
   
-  @Column(name="Pass")
-  private String pass;
-
   //Constructors
   public Identity (){
     //Mandatory constructor
   }
-  
-  public Identity( String displayName, String email, Date birthdate, String pass){
+
+  public Identity( String displayName, String email, Date birthdate){
     this.displayName = displayName;
     this.email = email;
     this.birthdate = birthdate;
-    this.pass = pass;
   }
   
   // Getters & Setters
@@ -70,15 +63,6 @@ public class Identity {
   public void setBirthdate(Date birthdate) {
     this.birthdate = birthdate;
   }
-  
-  public String getPass() {
-    return pass;
-  }
-
-  public void setPass(String pass) {
-    this.pass = pass;
-  }
-
   
   @Override
   public String toString()
