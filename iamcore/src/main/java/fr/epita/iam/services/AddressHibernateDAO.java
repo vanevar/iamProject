@@ -11,16 +11,18 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import fr.epita.iam.datamodel.Address;
 import fr.epita.iam.exceptions.DaoInitializationException;
 
+@Repository
 public class AddressHibernateDAO implements Dao<Address>{
   @Inject
   @Named("sFactory")
   private SessionFactory sf;
   
-  private static final Logger LOGGER = LogManager.getLogger(IdentityHibernateDAO.class);
+  private static final Logger LOGGER = LogManager.getLogger(AddressHibernateDAO.class);
 
   public void write(Address addr) {
     LOGGER.debug("=> writeAddress : tracing the input : {}", addr.toString());

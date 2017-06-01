@@ -4,12 +4,14 @@ import javax.inject.Inject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import fr.epita.iam.datamodel.User;
 
+@Repository
 public class AuthenticationDataService {
   @Inject
-  UserHibernateDAO uDao;
+  Dao<User> uDao;
   
   private static final Logger LOGGER = LogManager.getLogger(AuthenticationDataService.class);
   

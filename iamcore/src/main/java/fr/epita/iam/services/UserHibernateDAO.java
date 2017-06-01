@@ -12,10 +12,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import fr.epita.iam.datamodel.User;
 import fr.epita.iam.exceptions.DaoInitializationException;
 
+@Repository
 public class UserHibernateDAO implements Dao<User>{
 
   @Inject

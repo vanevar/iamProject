@@ -11,4 +11,5 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <mvc:resources location="/webjars/" mapping="/webjars/**" />
+     <mvc:resources mapping="/resources/**" location="/resources/"/>
 </beans>

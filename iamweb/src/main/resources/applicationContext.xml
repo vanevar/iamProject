@@ -15,15 +15,16 @@
     <bean id="addressDao" name="addressDao" class="fr.epita.iam.services.AddressHibernateDAO"/>
     
     <bean name="userDao" class="fr.epita.iam.services.UserHibernateDAO"/>
+   <bean name="idDataService" class="fr.epita.iam.services.IdentityDataService"/>
+    
+    <bean name="authenticateDS" class="fr.epita.iam.services.AuthenticationDataService"/>
+    
     -->
     
     <context:annotation-config />
 	<context:component-scan base-package="fr.epita.iam.services" />
     
     
-    <bean name="idDataService" class="fr.epita.iam.services.IdentityDataService"/>
-    
-    <bean name="authenticateDS" class="fr.epita.iam.services.AuthenticationDataService"/>
     
     <bean id="dataSourceConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -44,7 +45,7 @@
        <property name="packagesToScan" value="fr.epita.iam.datamodel" />
        <property name="hibernateProperties">
          <props>
-           <prop key="hiberate.dialect">org.hibernate.dialect.DerbyTenSevenDialect</prop>
+           <prop key="hibernate.dialect">org.hibernate.dialect.DerbyTenSevenDialect</prop>
            <prop key="hibernate.hbm2ddl.auto">update</prop>
            <prop key="hibernate.show_sql">true</prop>
          </props>

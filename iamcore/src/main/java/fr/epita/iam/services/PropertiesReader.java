@@ -10,7 +10,7 @@ public class PropertiesReader {
   private String fileName = null;
   private Properties propFile = new Properties();
   
-  private static final Logger LOGGER = LogManager.getLogger(IdentityJDBCDAO.class);
+  private static final Logger LOGGER = LogManager.getLogger(PropertiesReader.class);
   
   public PropertiesReader(String fileName) {
     super();

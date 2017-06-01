@@ -7,10 +7,12 @@ import javax.inject.Inject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import fr.epita.iam.datamodel.Address;
 import fr.epita.iam.datamodel.Identity;
 
+@Repository
 public class IdentityDataService {
   
   private static final Logger LOGGER = LogManager.getLogger(IdentityDataService.class);

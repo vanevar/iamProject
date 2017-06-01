@@ -34,7 +34,7 @@
        <property name="packagesToScan" value="fr.epita.iam.datamodel" />
        <property name="hibernateProperties">
          <props>
-           <prop key="hiberate.dialect">org.hibernate.dialect.DerbyTenSevenDialect</prop>
+           <prop key="hibernate.dialect">org.hibernate.dialect.DerbyTenSevenDialect</prop>
            <prop key="hibernate.hbm2ddl.auto">update</prop>
            <prop key="hibernate.show_sql">true</prop>
          </props>

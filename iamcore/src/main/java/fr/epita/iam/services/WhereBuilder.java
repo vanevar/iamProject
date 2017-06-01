@@ -12,11 +12,10 @@ import org.hibernate.Session;
 import fr.epita.iam.datamodel.Address;
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.datamodel.User;
-import fr.epita.iam.iamcore.test.TestIdentityHibernateDAO;
 
 public class WhereBuilder {
   
-  private static final Logger LOGGER = LogManager.getLogger(TestIdentityHibernateDAO.class);
+  private static final Logger LOGGER = LogManager.getLogger(WhereBuilder.class);
 
   public Query identityWhere(Session session, Identity identity)
   {
