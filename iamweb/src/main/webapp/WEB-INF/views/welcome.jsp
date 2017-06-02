@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
     
 <!DOCTYPE html>
 <html>
@@ -19,12 +20,15 @@
 <title>Welcome to IAM System</title>
 </head>
 <body>
+  <spring:url value="/identityForm" var="create" />
+  <spring:url value="/identityList" var="search" />
+  <jsp:include page="_header.jsp"></jsp:include>
+					  				  
   <div class="container">
-	<jsp:include page="_header.jsp"></jsp:include>
 	<div class="row">
 	<div class="col-sm-12 jumbotron">
  		<h1>Welcome to the I am System! </h1>
-  		<p><a class="btn btn-default btn-lg" href="#" role="button">Disconect</a></p>
+  		<p><a class="btn btn-warnig btn-lg" href="#" role="button">Disconnect</a></p>
 	</div>
 	</div>
 	<div class="row">
@@ -32,16 +36,21 @@
   		<div class="panel-body">
     		<h3>Identity Creation</h3>
   			<p>With this action you can create a new identity. Click the button to begin!</p>
-			<a class="btn btn-default pull-left" href="#" role="button">Create</a>
+			<a class="btn btn-sample pull-left" href="${create}" role="button">Create</a>
   		</div>
 	  </div>
 	  <div class="col-sm-6 panel panel-default">
   		<div class="panel-body">
     		<h3>Identity Search</h3>
 			<p>Search, update and delete an identity. </p>
-			<a class="btn btn-default pull-left" href="#" role="button">Search</a>
+			<a class="btn btn-sample pull-left" href="${search}" role="button">Search</a>
   		</div>
 	  </div>
+    </div>
   </div>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="webjars/jquery/2.2.3/jquery.min.js"></script>
 </body>
 </html>

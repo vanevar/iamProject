@@ -47,7 +47,7 @@
                 <input type="password" class="form-control" placeholder="Password" aria-describedby="password-logo"
                 	id="passwordInput" name="password" />
              </div>
-             <input class="btn btn-default pull-right" type="submit" value="Login">
+             <input class="btn btn-sample pull-right" type="submit" value="Login">
              <div class="smallgap"></div>
             </form>
           </div>

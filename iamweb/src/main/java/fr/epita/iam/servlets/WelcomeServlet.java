@@ -23,15 +23,11 @@ public class WelcomeServlet extends HttpServlet {
           throws ServletException, IOException {
       HttpSession session = req.getSession();
 
-
-      // Check User has logged on
+      // Check we have a user in session
       User loggedUser = SessionStorageHelper.getLoggedUser(session);
-
 
       // Not logged in
       if (loggedUser == null) {
-     
-          // Redirect to login page.
           resp.sendRedirect(req.getContextPath() + "/authenticate");
           return;
       }
@@ -40,7 +36,7 @@ public class WelcomeServlet extends HttpServlet {
       req.setAttribute("user", loggedUser);
 
 
-      // Logged, forward to /WEB-INF/views/userInfoView.jsp
+      // Logged, forward to welcome page
       RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/welcome.jsp");
       dispatcher.forward(req, resp);
 

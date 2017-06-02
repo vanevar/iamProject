@@ -1,6 +1,7 @@
 package fr.epita.iam.iamcore.test;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -16,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import fr.epita.iam.datamodel.Address;
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.services.Dao;
 import fr.epita.iam.services.DateFormatManager;
@@ -36,7 +38,8 @@ public class TestIdentityHibernateDAO {
   
   @Test
   public void testHibernate(){
-    List<Identity> identities = null;
+    List<Identity> identities = dao.search(new Identity(null, null, null));
+    int before = identities.size();
     
     LOGGER.info("Before : {} ", identities);
     
@@ -49,18 +52,18 @@ public class TestIdentityHibernateDAO {
     {
       System.out.println(id2.toString());
      }
-    Assert.assertTrue(!identities.isEmpty());
+    Assert.assertTrue(identities.size()>before);
     
     LOGGER.info("Search by Display Name");
-    identities = dao.search(new Identity("c", null, null));
+    identities = dao.search(new Identity("cArLos", null, null));
     System.out.println(identities);
     Assert.assertTrue(identities.size() >= 1);
     
     LOGGER.info("Update Identity");    
-    id = dao.search(new Identity("c", null, null)).get(0);
+    id = dao.search(new Identity("dIeZ", null, null)).get(0);
     id.setDisplayName("Pepe");
     dao.update(id);
-    identities = dao.search(new Identity("p", null, null));
+    identities = dao.search(new Identity("pePE", null, null));
     System.out.println(identities);
     Assert.assertTrue(identities.size() >= 1);
     
@@ -69,7 +72,7 @@ public class TestIdentityHibernateDAO {
     Assert.assertTrue(!res.isEmpty());
     
     LOGGER.info("Delete Identity");    
-    int before = dao.search(new Identity(null, null, null)).size();
+    before = dao.search(new Identity(null, null, null)).size();
     dao.delete(id);
     Assert.assertTrue(dao.search(new Identity(null, null, null)).size()<before);
   
@@ -89,6 +92,15 @@ public class TestIdentityHibernateDAO {
     List<Identity> result = query.list();
     
     Assert.assertTrue(!result.isEmpty());
+  }
+  
+  @Test
+  public void testAddress(){
+    Set<Address> addresses = dao.search(new Identity(null, null, null)).get(0).getAddresses();
+    for(Address add : addresses )
+    {
+      System.out.println(add.toString());
+    }
   }
   
 //  @Test

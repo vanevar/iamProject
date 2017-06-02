@@ -1,13 +1,20 @@
 package fr.epita.iam.datamodel;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import fr.epita.iam.services.DateFormatManager;
 
@@ -28,6 +35,10 @@ public class Identity {
   
   @Column(name="Birthday")
   private Date birthdate;
+  
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "identity")
+  @Cascade({CascadeType.ALL})
+  private Set<Address> addresses;
   
   //Constructors
   public Identity (){
@@ -64,12 +75,26 @@ public class Identity {
     this.birthdate = birthdate;
   }
   
+  public Set<Address> getAddresses() {
+    return addresses;
+  }
+
+  public void setAddresses(Set<Address> addresses) {
+    this.addresses = addresses;
+  }
+
+  public int countAddresses()
+  {
+    return this.addresses == null ? this.addresses.size() : 0;
+  }
+  
   @Override
   public String toString()
   {
     DateFormatManager dfm = new DateFormatManager();
+    String bd = this.birthdate != null ? dfm.stringFromDate(this.birthdate) : "NA";
     String identity = "Identity [ uid = " + this.uid + ", displayName = " + this.displayName +  
-        ", email = " + this.email + ", birthdate = " + dfm.stringFromDate(this.birthdate);    
+        ", email = " + this.email + ", birthdate = " + bd;    
     return identity + "]";
         
   }

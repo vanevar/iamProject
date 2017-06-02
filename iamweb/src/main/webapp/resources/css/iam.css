@@ -4,7 +4,7 @@
 */
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 1px;
+  padding-top: 70px;
   padding-bottom: 20px;
 }
 
@@ -99,4 +99,49 @@ body {
 }
 th.half {
   width: 50%
+}
+.btn-sample { 
+  color: #ffffff; 
+  background-color: #916FC3; 
+  border-color: #6558A8; 
+} 
+ 
+.btn-sample:hover, 
+.btn-sample:focus, 
+.btn-sample:active, 
+.btn-sample.active, 
+.open .dropdown-toggle.btn-sample { 
+  color: #ffffff; 
+  background-color: #8157B8; 
+  border-color: #6558A8; 
+} 
+ 
+.btn-sample:active, 
+.btn-sample.active, 
+.open .dropdown-toggle.btn-sample { 
+  background-image: none; 
+} 
+ 
+.btn-sample.disabled, 
+.btn-sample[disabled], 
+fieldset[disabled] .btn-sample, 
+.btn-sample.disabled:hover, 
+.btn-sample[disabled]:hover, 
+fieldset[disabled] .btn-sample:hover, 
+.btn-sample.disabled:focus, 
+.btn-sample[disabled]:focus, 
+fieldset[disabled] .btn-sample:focus, 
+.btn-sample.disabled:active, 
+.btn-sample[disabled]:active, 
+fieldset[disabled] .btn-sample:active, 
+.btn-sample.disabled.active, 
+.btn-sample[disabled].active, 
+fieldset[disabled] .btn-sample.active { 
+  background-color: #916FC3; 
+  border-color: #6558A8; 
+} 
+ 
+.btn-sample .badge { 
+  color: #916FC3; 
+  background-color: #ffffff; 
 }

@@ -33,6 +33,7 @@ public class TestAddressDao {
   @Test
   public void testAddressHibernate(){
     LOGGER.info("Creating Identity for Address");
+    int before = idDao.search(new Identity(null, null, null)).size();
     DateFormatManager dfm = new DateFormatManager();
     Identity id = new Identity("Carlos Diez", "cdm@gmailcom"
         , dfm.dateFromString("1980-12-24"));
@@ -47,7 +48,8 @@ public class TestAddressDao {
     {
       System.out.println(id2.toString());
     }
-    Assert.assertTrue(!identities.isEmpty());
+    Assert.assertTrue(before < identities.size());
+    before = identities.size();
   
     LOGGER.info("Test Address Search by first line");
     List<Address> addresses = addrDao.search(new Address (null, "kEN", null, null, null ));
@@ -71,7 +73,7 @@ public class TestAddressDao {
     
     LOGGER.info("Delete address");
     addrDao.delete(modifiedAddr);
-    Assert.assertTrue(addrDao.search(new Address(null, null, null, null, null)).isEmpty());
+    Assert.assertTrue(addrDao.search(new Address(null, null, null, null, null)).size()<before);
     
     LOGGER.info("Test Id still remains after address deleted");
     Assert.assertTrue(!idDao.search(new Identity(null, null, null)).isEmpty());

@@ -49,31 +49,22 @@ public class AuthenticationServlet extends HttpServlet{
        }
     } 
 
- // If error, forward to /WEB-INF/views/index.jsp
+    // If error, go to index page again
     if (!msg.isEmpty()) {
-         
-    
-        // Store information in request attribute, before forward.
-        req.setAttribute("msg", msg);
-  
-        RequestDispatcher dispatcher 
-        = this.getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp");
-
-        dispatcher.forward(req, resp);
+      // Store error in request attribute, before forward.
+      req.setAttribute("msg", msg);
+      RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp");
+      dispatcher.forward(req, resp);
     }
  
     // If no error
     // Store user information in Session
-    // And redirect to userInfo page.
+    // And redirect to welcome page.
     else {
         HttpSession session = req.getSession();
         SessionStorageHelper.storeLoggedUser(session, user);   
-  
-        // Redirect to userInfo page.
         resp.sendRedirect(req.getContextPath() + "/welcome");
     }
-
   }
-
   
 }
