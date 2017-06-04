@@ -1,7 +1,6 @@
 package fr.epita.iam.datamodel;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -60,6 +59,9 @@ public class Identity {
   }
   public long getUid() {
     return uid;
+  }
+  public void setUid( long id) {
+    this.uid = id;
   }
 
   public String getEmail() {

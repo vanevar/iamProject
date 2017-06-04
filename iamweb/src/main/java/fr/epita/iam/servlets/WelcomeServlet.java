@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.epita.iam.datamodel.User;
 import fr.epita.iam.utils.SessionStorageHelper;
 
@@ -17,6 +20,7 @@ import fr.epita.iam.utils.SessionStorageHelper;
 public class WelcomeServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
+  private static final Logger LOGGER = LogManager.getLogger(WelcomeServlet.class);
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -28,8 +32,12 @@ public class WelcomeServlet extends HttpServlet {
 
       // Not logged in
       if (loggedUser == null) {
-          resp.sendRedirect(req.getContextPath() + "/authenticate");
+        try{
+          resp.sendRedirect(req.getContextPath() + "/Home");
           return;
+        }catch(Exception e){
+          LOGGER.error("An error ocurred when trying to go back to the authentication page. doGet method. {}", e);
+        }
       }
 
       // Store info in request attribute
@@ -37,14 +45,22 @@ public class WelcomeServlet extends HttpServlet {
 
 
       // Logged, forward to welcome page
-      RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/welcome.jsp");
-      dispatcher.forward(req, resp);
-
+      try{
+        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/welcome.jsp");
+        dispatcher.forward(req, resp);
+      }catch(Exception e){
+        LOGGER.error("An error ocurred when trying to reach the welcome page. doGet method. {}", e);
+      }
   }
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    try{
       doGet(request, response);
+    }catch(Exception e)
+    {
+      LOGGER.error("An error ocurred when trying to reach the welcome page. doPost method. {}", e);
+    }
   }
 }

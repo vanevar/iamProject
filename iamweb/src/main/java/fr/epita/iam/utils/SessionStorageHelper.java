@@ -6,19 +6,26 @@ import fr.epita.iam.datamodel.User;
 
 public class SessionStorageHelper {
 
-//Store user info in Session.
-  public static void storeLoggedUser(HttpSession session, User loggedUser) {
-
-      // On the JSP can access ${loggedUser}
+  private SessionStorageHelper() {
+    throw new IllegalAccessError("SessionStorageHelper class");
+  }
+  
+  /*
+   * Store user info in Session.
+   */
+  public static void storeLoggedUser(HttpSession session, User loggedUser) {    
       session.setAttribute("loggedUser", loggedUser);
-      session.setAttribute("loggedUserDisplayName", loggedUser.getIdentity().getDisplayName());
   }
 
 
   // Get the user information stored in the session.
   public static User getLoggedUser(HttpSession session) {
-      User loggedUser = (User) session.getAttribute("loggedUser");
-      return loggedUser;
+      return (User) session.getAttribute("loggedUser");
+  }
+  
+  //Remove User info from session 
+  public static void removeLoggedUser(HttpSession session){
+    session.removeAttribute("loggedUser");
   }
   
 }

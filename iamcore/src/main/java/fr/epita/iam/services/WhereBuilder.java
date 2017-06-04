@@ -24,28 +24,28 @@ public class WhereBuilder {
     String queryHelper = "";
     if(0L != identity.getUid())
     {
-      queryHelper += queryHelper.isEmpty() ? " i.Uid = :uid " : " or i.Uid = :uid ";
+      queryHelper += concatenate(queryHelper, " i.uid = :uid ");
       values.put("uid", identity.getUid());
     }
     
     if(identity.getDisplayName() != null)
     {
-      queryHelper+= queryHelper.isEmpty() ? " lower(i.displayName) like lower(:displayName) " : " or lower(i.displayName) like lower(:displayName) ";
+      queryHelper += concatenate(queryHelper, " lower(i.displayName) like lower(:displayName) " );
       values.put("displayName", identity.getDisplayName());
     }
     
     if(identity.getEmail() != null)
     {
-      queryHelper+= queryHelper.isEmpty() ? " lower(i.email) like lower(:email) " : " or lower(i.email) like lower(:email) ";
+      queryHelper += concatenate(queryHelper, " lower(i.email) like lower(:email) ");
       values.put("email", identity.getEmail());
     }
       
     if(identity.getBirthdate() != null)
     {
-      queryHelper+=queryHelper.isEmpty() ? " i.birthdate = :birthday " : " or i.birthdate = :birthday ";
+      queryHelper+= concatenate(queryHelper, " i.birthdate = :birthday ");
       values.put("birthday", identity.getBirthdate());
     }
-    queryString+=queryHelper.isEmpty()? "" : "and ( " + queryHelper + ")";
+    queryString+= appendHelper (queryHelper);  
     LOGGER.info("Build Identity where: {}", queryString);
     Query query = session.createQuery(queryString);
     String[] namedParameters = query.getNamedParameters();
@@ -53,6 +53,10 @@ public class WhereBuilder {
       if("birthday".equals(parameter))
       {
         query.setDate(parameter, (Date) values.get(parameter));
+      }
+      else if("uid".equals(parameter))
+      {
+        query.setLong(parameter, (Long) values.get(parameter));
       }
       else
       {
@@ -70,35 +74,35 @@ public class WhereBuilder {
     String queryHelper = "";
     if(0L != addr.getaId())
     {
-      queryHelper += queryHelper.isEmpty() ? " a.aId = :aid " : " or a.aId = :aid ";
+      queryHelper += concatenate(queryHelper, " a.aId = :aid ");
       values.put("aid", addr.getaId());
     }
     else if(addr.getFirstLine() != null)
     {
-      queryHelper+= queryHelper.isEmpty() ? " lower(a.firstLine) like lower(:firstLine) " : " or lower(a.firstLine) like lower(:firstLine) ";
+      queryHelper += concatenate(queryHelper, " lower(a.firstLine) like lower(:firstLine) ");
       values.put("firstLine", addr.getFirstLine());
     }
     else if(addr.getCity() != null)
     {
-      queryHelper+= queryHelper.isEmpty() ? " lower(a.city) like lower(:city) ": " or lower(a.city) like lower(:city) ";
+      queryHelper += concatenate(queryHelper, " lower(a.city) like lower(:city) ");
       values.put("city", addr.getCity());
     }
     else if(addr.getPostalCode() != null)
     {
-      queryHelper+=queryHelper.isEmpty() ? " lower(a.postalCode) like lower(:postalCode) " : " or lower(a.postalCode) like lower(:postalCode) ";
+      queryHelper += concatenate(queryHelper, " lower(a.postalCode) like lower(:postalCode) ");
       values.put("postalCode", addr.getPostalCode());
     }
     else if(addr.getCountry() != null)
     {
-      queryHelper+= queryHelper.isEmpty() ? " lower(a.country) like lower(:country) " : " or lower(a.country) like lower(:country) ";
+      queryHelper += concatenate(queryHelper, " lower(a.country) like lower(:country) ");
       values.put("country", addr.getCountry());
     }
     else if(addr.getIdentity() != null)
     {
-      queryHelper+= queryHelper.isEmpty() ? " a.id_Id = :id_Id " : " or a.id_Id = :id_Id ";
+      queryHelper += concatenate(queryHelper, " a.id_Id = :id_Id ");
       values.put(idColumn, addr.getIdentityId());
     }
-    queryString+= queryHelper.isEmpty() ? "" : "and ( "+ queryHelper + ")";
+    queryString+= appendHelper (queryHelper); 
     LOGGER.info("Build where: {}", queryString);
     Query query = session.createQuery(queryString);
     String[] namedParameters = query.getNamedParameters();
@@ -149,5 +153,15 @@ public class WhereBuilder {
       query.setParameter(parameter, "%"+values.get(parameter)+"%");
     }
     return query;
+  }
+
+  public String concatenate(String queryHelper, String cmd)
+  {
+    return queryHelper.isEmpty() ? cmd : " or " + cmd;
+  }
+  
+  public String appendHelper(String helperQuery)
+  {
+    return helperQuery.isEmpty() ? "" : " and ( " + helperQuery + " )";
   }
 }

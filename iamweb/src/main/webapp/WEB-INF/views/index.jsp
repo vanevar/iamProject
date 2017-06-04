@@ -27,9 +27,7 @@
       <div class="col col-md-2">&nbsp;&nbsp;</div>
       
       <div class="col col-md-5 login-form">
-	    <c:if test="${not empty msg}">
-		  <div class="alert alert-danger" role="alert">${msg}</div>
-	    </c:if>
+	    <jsp:include page="_messages.jsp"></jsp:include>
         <div class="wrap">
           <form method="POST" action="authenticate">
 <!--             <div class="text-center cus-text">Login</div> -->

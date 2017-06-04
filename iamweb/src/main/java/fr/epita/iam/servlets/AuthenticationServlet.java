@@ -34,27 +34,35 @@ public class AuthenticationServlet extends HttpServlet{
     SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     LOGGER.info("Auth instance is: {}" , authDS);
     
-    String msg = "";
+    String errorMsg = "";
+    String warMsg="";
+    
     User user = null;
     String login = req.getParameter("login");
     String password = req.getParameter("password");
     
     if (login == null || password == null
         || login.length() == 0 || password.length() == 0) {
-      msg = "Required username and password!";
+      warMsg = "Required username and password!";
     } else {
       user = authDS.authenticate(login, password);
       if (user == null) {
-        msg = "User Name or password invalid";
+        errorMsg = "User Name or password invalid";
        }
     } 
 
     // If error, go to index page again
-    if (!msg.isEmpty()) {
+    if (!warMsg.isEmpty() || !errorMsg.isEmpty()) {
       // Store error in request attribute, before forward.
-      req.setAttribute("msg", msg);
-      RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp");
-      dispatcher.forward(req, resp);
+      req.setAttribute("war_msg", warMsg);
+      req.setAttribute("error_msg", errorMsg);
+      try{
+        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp");
+        dispatcher.forward(req, resp);
+      }catch(Exception e)
+      {
+        LOGGER.error("An error ocurred when trying to refresh the authentication page doPost method. {}", e);
+      }      
     }
  
     // If no error
@@ -63,8 +71,13 @@ public class AuthenticationServlet extends HttpServlet{
     else {
         HttpSession session = req.getSession();
         SessionStorageHelper.storeLoggedUser(session, user);   
-        resp.sendRedirect(req.getContextPath() + "/welcome");
+        try{
+          resp.sendRedirect(req.getContextPath() + "/welcome");
+        }catch(Exception e){
+          LOGGER.error("An error ocurred when trying to reach the welcome page. doPost method. {}", e);
+        }
     }
   }
+  
   
 }

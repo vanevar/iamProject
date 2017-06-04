@@ -24,11 +24,8 @@
   <jsp:include page="_header.jsp"></jsp:include>
 	
   <div class="container">
-	<c:if test="${not empty msg}">
-		  <div class="alert alert-info" role="alert">${msg}</div>
-	</c:if>
+	<jsp:include page="_messages.jsp"></jsp:include>
 	<h2>Identity Search</h2>
-	<p> PUT HERE A BACK LINK</p>
 	<div class="panel panel-default">
   	  <div class="panel-heading">
         <h3 class="panel-title">Search Criteria</h3>
@@ -80,23 +77,27 @@
 				<td><fmt:formatDate pattern = "yyyy-MM-dd" value = "${identity.birthdate}"></fmt:formatDate></td>
 				<td>
 					<c:if test= "${fn:length(identity.addresses) gt 0}">
-						<spring:url value="/users/${identity.uid}/addr" var="userAddr" />
-						<button class="btn btn-info"
-                                          onclick="location.href='${userUrl}'">See address</button>
+<%-- 						<spring:url value="/users/${identity.uid}/addr" var="userAddr" /> --%>
+<!-- 						<button class="btn btn-info" -->
+<%--                                           onclick="location.href='${userUrl}'">See address</button> --%>
+					  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 					</c:if>
 				</td>
 				<td>
-				  <spring:url value="/users/${identity.uid}" var="userUrl" />
-				  <spring:url value="/users/${identity.uid}/delete" var="deleteUrl" />
-				  <spring:url value="/users/${identity.uid}/update" var="updateUrl" />
+				  <spring:url value="/show?id=${identity.uid}" var="userUrl" />
+				  <spring:url value="/delete?id=${identity.uid}" var="deleteUrl" />
+				  <spring:url value="/update?id=${identity.uid}" var="updateUrl" />
 
-				  <button class="btn btn-primary"
-                                          onclick="location.href='${userUrl}'">Query</button>
-				  <button class="btn btn-success"
-                                          onclick="location.href='${updateUrl}'">Update</button>
+				  <button class="btn btn-primary" onclick="location.href='${userUrl}'">
+				  	<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+				  </button>
+				  <button class="btn btn-success" onclick="location.href='${updateUrl}'">
+				    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+				  </button>
 				  <c:if test="${loggedUser.identity.uid ne identity.uid}">
-				    <button class="btn btn-danger"
-                                          onclick="this.disabled=true;post('${deleteUrl}')">Delete</button>
+				    <button class="btn btn-danger" onclick="location.href='${deleteUrl}'">
+				      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				    </button>
                   </c:if>
                 </td>
 			  </tr>
