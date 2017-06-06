@@ -28,7 +28,6 @@
 	<div class="row">
 	<div class="col-sm-12 jumbotron">
  		<h1>Welcome to the I am System! </h1>
-  		<p><a class="btn btn-warnig btn-lg" href="#" role="button">Disconnect</a></p>
 	</div>
 	</div>
 	<div class="row">
