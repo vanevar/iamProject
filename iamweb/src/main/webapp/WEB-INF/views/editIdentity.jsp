@@ -55,7 +55,7 @@
       		  <label class="control-label " for="date">
        			Birthday:
       		  </label>
-      		  <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text" value="${formatedDate}"/>
+      		  <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="date" value="${formatedDate}"/>
      		</div>
      		<div class="form-group">
       		  <div>

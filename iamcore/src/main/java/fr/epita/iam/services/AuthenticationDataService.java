@@ -1,5 +1,7 @@
 package fr.epita.iam.services;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,8 +21,11 @@ public class AuthenticationDataService {
   public User authenticate(String login, String pass)
   {
     LOGGER.info(" => Authenticate with params : {}, {}", login, pass);
-    User result;
-    result = uDao.search(new User(login, pass, null)).get(0);
-    return result;
+    List<User> result = uDao.search(new User(login, pass, null));
+    if(!result.isEmpty())
+    {
+      return result.get(0);
+    }
+    return null;
   }
 }
